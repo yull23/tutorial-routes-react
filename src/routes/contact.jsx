@@ -1,6 +1,10 @@
 import { Form } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Contact() {
+  // const { contactId } = useParams();
+  // console.log(contactId);
+
   const contact = {
     first: "Your",
     last: "Name",
