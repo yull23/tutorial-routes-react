@@ -1,17 +1,20 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
-import { getContacts } from "../contacts";
+import { Form, Link, Outlet, useLoaderData } from "react-router-dom";
+import { createContact, getContacts } from "../contacts";
 
 export async function loader() {
   const contacts = await getContacts();
+  console.log("Hi");
   return { contacts };
 }
 
 export default function Root() {
   const { contacts } = useLoaderData();
-  console.log(contacts);
   return (
     <>
       <div id="sidebar">
+        <Form method="post">
+          <button type="submit">New</button>
+        </Form>
         <nav>
           {contacts.length ? (
             <ul>
@@ -69,4 +72,9 @@ export default function Root() {
       </div>
     </>
   );
+}
+
+export async function action() {
+  const contact = await createContact();
+  return { contact };
 }
