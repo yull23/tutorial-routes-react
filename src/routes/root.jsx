@@ -6,6 +6,7 @@ import {
   redirect,
   useLoaderData,
   useNavigation,
+  useSubmit,
 } from "react-router-dom";
 import { createContact, getContacts } from "../contacts";
 import { useEffect, useState } from "react";
@@ -25,11 +26,7 @@ export async function loader({ request }) {
 export default function Root() {
   const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
-  const [query, setQuery] = useState(q);
-
-  useEffect(() => {
-    setQuery(query);
-  }, [q]);
+  const submit = useSubmit();
 
   return (
     <>
@@ -77,8 +74,11 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              value={q}
+              // onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                submit(e.currentTarget.form);
+              }}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
