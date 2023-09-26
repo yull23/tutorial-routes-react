@@ -9,8 +9,16 @@ import {
 } from "react-router-dom";
 import { createContact, getContacts } from "../contacts";
 
-export async function loader() {
-  const contacts = await getContacts();
+// export async function loader() {
+//   const contacts = await getContacts();
+//   return { contacts };
+// }
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  //La API posee una metodo para buscar por parametro:
+  const q = url.searchParams.get("q");
+  console.log(q);
+  const contacts = await getContacts(q);
   return { contacts };
 }
 
@@ -56,7 +64,7 @@ export default function Root() {
         </nav>
         <h1>React Router Contacts</h1>
         <div>
-          <form id="search-form" role="search">
+          <Form id="search-form" role="search">
             <input
               id="q"
               aria-label="Search contacts"
@@ -66,7 +74,7 @@ export default function Root() {
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
-          </form>
+          </Form>
           <form method="post">
             <button type="submit">New</button>
           </form>
