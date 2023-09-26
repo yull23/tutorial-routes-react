@@ -26,7 +26,8 @@ export async function loader({ request }) {
 export default function Root() {
   const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
-  const submit = useSubmit();
+  const [query, setQuery] = useState(q);
+  // const submit = useSubmit();
 
   return (
     <>
@@ -74,11 +75,11 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
-              value={q}
-              // onChange={(e) => setQuery(e.target.value)}
-              onChange={(e) => {
-                submit(e.currentTarget.form);
-              }}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              // onChange={(e) => {
+              //   submit(e.currentTarget.form);
+              // }}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
