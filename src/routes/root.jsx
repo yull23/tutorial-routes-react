@@ -8,6 +8,7 @@ import {
   useNavigation,
 } from "react-router-dom";
 import { createContact, getContacts } from "../contacts";
+import { useEffect, useState } from "react";
 
 // export async function loader() {
 //   const contacts = await getContacts();
@@ -17,14 +18,18 @@ export async function loader({ request }) {
   const url = new URL(request.url);
   //La API posee una metodo para buscar por parametro:
   const q = url.searchParams.get("q");
-  console.log(q);
   const contacts = await getContacts(q);
-  return { contacts };
+  return { contacts, q };
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData();
+  const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    document.getElementById("q").value = q;
+  }, [q]);
+
   return (
     <>
       <div id="sidebar">
@@ -71,6 +76,7 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
+              defaultValue={q}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
