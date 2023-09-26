@@ -25,9 +25,10 @@ export async function loader({ request }) {
 export default function Root() {
   const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
+  const [query, setQuery] = useState(q);
 
   useEffect(() => {
-    document.getElementById("q").value = q;
+    setQuery(query);
   }, [q]);
 
   return (
@@ -76,7 +77,8 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
-              defaultValue={q}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
