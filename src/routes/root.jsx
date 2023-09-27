@@ -88,9 +88,9 @@ export default function Root() {
             <div id="search-spinner" aria-hidden hidden={!searching} />
             <div className="sr-only" aria-live="polite"></div>
           </Form>
-          <form method="post">
+          {/* <form method="post">
             <button type="submit">New</button>
-          </form>
+          </form> */}
         </div>
         <nav>
           <ul>
